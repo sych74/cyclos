@@ -58,7 +58,7 @@ application:
     - executeShellCommands:
       - nodeGroup: sqldb
         commands:
-        - PGPASSWORD=${nodes.sqldb.password} psql -Uwebadmin postgres -psql -c "create database cyclos4;"
+        - PGPASSWORD=${nodes.sqldb.password} psql -Uwebadmin postgres -c "create database cyclos4;"
     configs:
       - nodeType: tomcat9
         restart: true
