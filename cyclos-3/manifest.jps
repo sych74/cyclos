@@ -48,6 +48,10 @@ application:
   onInstall:
     call:
     - ConfigDB
+    deploy:
+        archive: https://license.cyclos.org/downloads/cyclos/cyclos-4.10.4.zip
+        name: cyclos-4.10.4.zip
+        context: ROOT
   procedures:
   - id: resetingNodePassword
     onCall:
@@ -59,7 +63,19 @@ application:
       - nodeGroup: sqldb
         commands:
         - PGPASSWORD=${nodes.sqldb.password} psql -Uwebadmin postgres -c "create database cyclos4;"
+    actions:
+      installCs:
+        - cmd[cp]: |-
+            cp -fR /opt/tomcat/webapps/ROOT/cyclos-4.10.4/web/* /opt/tomcat/webapps/ROOT/
+            cp /opt/tomcat/webapps/ROOT/WEB-INF/classes/cyclos-release.properties /opt/tomcat/webapps/ROOT/WEB-INF/classes/cyclos.properties
     configs:
+      path: "/opt/tomcat/webapps/ROOT/WEB-INF/classes/cyclos.properties"
+      replacements:
+      - pattern: "cyclos.datasource.jdbcUrl = jdbc:postgresql://localhost/cyclos4"
+        replacement: "cyclos.datasource.jdbcUrl = jdbc:postgresql://${nodes.postgres9.address}/cyclos4"
+      - pattern: "cyclos.datasource.user = cyclos"
+        replacement: "cyclos.datasource.user = webadmin"
+      - pattern: "cyclos.datasource.password = cyclos"
+        replacement: "cyclos.datasource.password = ${nodes.sqldb.password}"
       - nodeType: tomcat9
         restart: true
-	
