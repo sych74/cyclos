@@ -22,8 +22,6 @@ application:
       style=''padding-left: 10px;''>1234</td></tr></table></br>To add custom domain
       name for your Cyclos installation follow the steps described in our <a href=''http://jelastic.com/docs/custom-domains''
       target=''_blank''>documentation</a>'
-  globals:
-    WEBAPPS: /opt/tomcat/webapps
   categories:
   - apps/accounting
   - apps/cms
@@ -50,8 +48,8 @@ application:
     actions:
       installCs:
         - cmd[cp]: |-
-            cp -fR ${WEBAPPS}/ROOT/cyclos-4.10.4/web/* ${WEBAPPS}/ROOT/
-            cp ${WEBAPPS}/ROOT/WEB-INF/classes/cyclos-release.properties ${WEBAPPS}/ROOT/WEB-INF/classes/cyclos.properties
+            cp -fR /opt/tomcat/webapps/ROOT/cyclos-4.10.4/web/* /opt/tomcat/webapps/ROOT/
+            cp /opt/tomcat/webapps/ROOT/WEB-INF/classes/cyclos-release.properties /opt/tomcat/webapps/ROOT/WEB-INF/classes/cyclos.properties
     configs:
     - nodeType: mysql5
       database:
@@ -59,7 +57,7 @@ application:
         user: ${nodes.mysql5.database.user}
     - nodeType: tomcat9
       restart: true
-      path: "${WEBAPPS}/ROOT/WEB-INF/classes/cyclos.properties"
+      path: "/opt/tomcat/webapps/ROOT/WEB-INF/classes/cyclos.properties"
       replacements:
       - pattern: "cyclos.datasource.driverClass = org.postgresql.Driver"
         replacement: "cyclos.datasource.driverClass = com.mysql.jdbc.Driver"
