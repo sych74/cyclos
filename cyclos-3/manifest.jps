@@ -48,8 +48,8 @@ application:
     actions:
       installCs:
         - cmd[cp]: |-
-            cp ${WEBAPPS}/ROOT/cyclos-4.10.4/web/* /opt/tomcat/webapps/ROOT/
-	    cp ${WEBAPPS}/ROOT/WEB-INF/classes/cyclos-release.properties ${WEBAPPS}/ROOT/WEB-INF/classes/cyclos.properties
+            cp -fR ${WEBAPPS}/ROOT/cyclos-4.10.4/web/* ${WEBAPPS}/ROOT/
+            cp ${WEBAPPS}/ROOT/WEB-INF/classes/cyclos-release.properties ${WEBAPPS}/ROOT/WEB-INF/classes/cyclos.properties
     configs:
     - nodeType: mysql5
       database:
