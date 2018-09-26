@@ -15,8 +15,7 @@ application:
       trade and development. Cyclos is also used by many organizations and communities
       to provide community currency services.</p>"
   success:
-    text: Below you will find your admin panel link, username and password. Admin panel URL: ${env.protocol}://${env.domain}/" target="_blank">${env.protocol}://${env.domain}/</a>
-Username: webadmin and Password: 1234. To add custom domain name for your Cyclos installation follow the steps described at http://jelastic.com/docs/custom-domains
+    text: 'Below you will find your admin panel link, username and password Admin panel URL: ${env.protocol}://${env.domain}'
   categories:
   - apps/accounting
   - apps/cms
@@ -62,7 +61,7 @@ Username: webadmin and Password: 1234. To add custom domain name for your Cyclos
       - cmd[cp]: |-
             cp -fR /opt/tomcat/webapps/ROOT/cyclos-4.10.4/web/* /opt/tomcat/webapps/ROOT/
             cp /opt/tomcat/webapps/ROOT/WEB-INF/classes/cyclos-release.properties /opt/tomcat/webapps/ROOT/WEB-INF/classes/cyclos.properties
-      replaceInFile:
+        replaceInFile:
         nodeGroup: cp
         path: "/opt/tomcat/webapps/ROOT/WEB-INF/classes/cyclos.properties"
         replacements:
