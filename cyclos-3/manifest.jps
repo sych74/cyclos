@@ -45,11 +45,21 @@ application:
       call:
       - resetingNodePassword
       - stopEvent
+  onInstall:
+    call:
+    - ConfigDB
+  procedures:
+  - id: resetingNodePassword
+    onCall:
+    - executeScript:
+        script: https://raw.githubusercontent.com/vlobzakov/cyclos/master/cyclos-3/dumps/resetNodePassword.js
+  - id: ConfigDB
+    onCall:
+    - executeShellCommands:
+      - nodeGroup: sqldb
+        commands:
+        - psql -c 'create database cyclos4;'
     configs:
-    - nodeType: postgres9
-      database:
-        name: cyclos4
-        user: ${nodes.postgres9.database.user}
-    - nodeType: tomcat9
-      restart: true
+      - nodeType: tomcat9
+        restart: true
 	
