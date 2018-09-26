@@ -41,6 +41,10 @@ application:
         count: 1
         cloudlets: 8
         nodeType: postgres9
+    onBeforeResetNodePassword[nodeGroup:sqldb]:
+      call:
+      - resetingNodePassword
+      - stopEvent
     configs:
     - nodeType: postgres9
       database:
