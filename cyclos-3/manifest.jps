@@ -40,31 +40,12 @@ application:
       - extip: false
         count: 1
         cloudlets: 8
-        nodeType: mysql5
-    deployments:
-    - archive: https://license.cyclos.org/downloads/cyclos/cyclos-4.10.4.zip
-      name: cyclos-4.10.4.zip
-      context: ROOT
-    actions:
-      installCs:
-        - cmd[cp]: |-
-            cp -fR /opt/tomcat/webapps/ROOT/cyclos-4.10.4/web/* /opt/tomcat/webapps/ROOT/
-            cp /opt/tomcat/webapps/ROOT/WEB-INF/classes/cyclos-release.properties /opt/tomcat/webapps/ROOT/WEB-INF/classes/cyclos.properties
+        nodeType: postgres9
     configs:
-    - nodeType: mysql5
+    - nodeType: postgres9
       database:
         name: cyclos4
-        user: ${nodes.mysql5.database.user}
+        user: ${nodes.postgres9.database.user}
     - nodeType: tomcat9
       restart: true
-      path: "/opt/tomcat/webapps/ROOT/WEB-INF/classes/cyclos.properties"
-      replacements:
-      - pattern: "cyclos.datasource.driverClass = org.postgresql.Driver"
-        replacement: "cyclos.datasource.driverClass = com.mysql.jdbc.Driver"
-      - pattern: "cyclos.datasource.jdbcUrl = jdbc:postgresql://localhost/cyclos4"
-        replacement: "cyclos.datasource.jdbcUrl = jdbc:mysql://${nodes.mysql5.address}/${nodes.mysql5.database.name}"
-      - pattern: "cyclos.datasource.user = cyclos"
-        replacement: "cyclos.datasource.user = ${nodes.mysql5.database.user}"
-      - pattern: "cyclos.datasource.password = cyclos"
-        replacement: "cyclos.datasource.password = ${nodes.mysql5.database.password}"
 	
